@@ -2,7 +2,6 @@ package memberlist
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -32,7 +31,7 @@ type NetTransportConfig struct {
 	BindPort int
 
 	// Logger is a logger for operator messages.
-	Logger *log.Logger
+	Logger Logger
 }
 
 // NetTransport is a Transport implementation that uses connectionless UDP for
@@ -41,7 +40,7 @@ type NetTransport struct {
 	config       *NetTransportConfig
 	packetCh     chan *Packet
 	streamCh     chan net.Conn
-	logger       *log.Logger
+	logger       Logger
 	wg           sync.WaitGroup
 	tcpListeners []*net.TCPListener
 	udpListeners []*net.UDPConn

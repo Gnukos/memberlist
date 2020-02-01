@@ -69,7 +69,7 @@ type Memberlist struct {
 
 	broadcasts *TransmitLimitedQueue
 
-	logger *log.Logger
+	logger Logger
 }
 
 // BuildVsnArray creates the array of Vsn

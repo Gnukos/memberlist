@@ -2,10 +2,47 @@ package memberlist
 
 import (
 	"io"
-	"log"
 	"os"
 	"time"
 )
+
+// Logger define Logger interface compatible with the
+// stdlib logger. This allow to set custom logger in
+// config.
+type Logger interface {
+	// Fatal same as std log Fatal
+	Fatal(v ...interface{})
+	// Fatalf same as std log Fatalf
+	Fatalf(format string, v ...interface{})
+	// Fatalln same as std log Fatalln
+	Fatalln(v ...interface{})
+	// Flags same as std log Flags
+	Flags() int
+	// Output same as std log Output
+	Output(calldepth int, s string) error
+	// Panic same as std log Panic
+	Panic(v ...interface{})
+	// Panicf same as std log Panicf
+	Panicf(format string, v ...interface{})
+	// Panicln same as std log Panicln
+	Panicln(v ...interface{})
+	// Prefix same as std log Prefix
+	Prefix() string
+	// Print same as std log Print
+	Print(v ...interface{})
+	// Printf same as std log Printf
+	Printf(format string, v ...interface{})
+	// Println same as std log Println
+	Println(v ...interface{})
+	// SetFlags same as std log SetFlags
+	SetFlags(flag int)
+	// SetOutput same as std log SetOutput
+	SetOutput(w io.Writer)
+	// SetPrefix same as std log SetPrefix
+	SetPrefix(prefix string)
+	// Writer same as std log Writer
+	Writer() io.Writer
+}
 
 type Config struct {
 	// The name of this node. This must be unique in the cluster.
@@ -200,7 +237,7 @@ type Config struct {
 	// this for the internal logger. If Logger is not set, it will fall back to the
 	// behavior for using LogOutput. You cannot specify both LogOutput and Logger
 	// at the same time.
-	Logger *log.Logger
+	Logger Logger
 
 	// Size of Memberlist's internal channel which handles UDP messages. The
 	// size of this determines the size of the queue which Memberlist will keep
